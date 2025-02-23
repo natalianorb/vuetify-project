@@ -12,7 +12,7 @@
         :color="isSelected ? 'primary' : undefined"
         class="ma-2"
         rounded
-        @click="toggle(); isSelected && $emit('select', category)"
+        @click="!isSelected && $emit('select', category); toggle(); "
       >
         <img
           :src="category.thumbnail || 'https://via.placeholder.com/100'"
