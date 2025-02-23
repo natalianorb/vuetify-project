@@ -7,7 +7,6 @@
       :key="category.slug"
       v-slot="{ isSelected, toggle }"
       :value="category.slug"
-      :active="selectedCategory === category"
     >
       <v-btn
         :color="isSelected ? 'primary' : undefined"

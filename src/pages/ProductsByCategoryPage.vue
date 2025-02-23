@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <CategoriesSidebar
+      <Categories
         :categories="categoriesStore.categories"
         :selected-category="categoriesStore.selectedCategory"
         @select="openCategory"
@@ -55,11 +55,10 @@
 </template>
 
 <script lang="ts" setup>
-import CategoriesSidebar from '@/components/Categories.vue'
-import ProductCard from '@/components/ProductCard.vue'
-import {useCategoriesStore,type Category} from '@/stores/categories'
-import {useProductsStore} from '@/stores/products'
-import {onMounted,watch} from 'vue'
+import ProductCard from '@/components/ProductCard.vue';
+import {useCategoriesStore,type Category} from '@/stores/categories';
+import {useProductsStore} from '@/stores/products';
+import {onMounted,watch} from 'vue';
 
 const props = defineProps<{
   categoryId?: string,
