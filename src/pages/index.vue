@@ -8,7 +8,10 @@
       />
 
       <!-- Products Section -->
-      <v-col cols="12" md="9">
+      <v-col
+        cols="12"
+        md="9"
+      >
         <v-row>
           <v-col
             v-for="product in productsStore.products"
@@ -21,8 +24,14 @@
           </v-col>
         </v-row>
 
-        <v-row v-if="!productsStore.products.length && !productsStore.loading" justify="center">
-          <v-col cols="12" class="text-center">
+        <v-row
+          v-if="!productsStore.products.length && !productsStore.loading"
+          justify="center"
+        >
+          <v-col
+            cols="12"
+            class="text-center"
+          >
             <v-alert type="info">
               No products found
             </v-alert>
@@ -50,11 +59,10 @@ import CategoriesSidebar from '@/components/Categories.vue'
 import ProductCard from '@/components/ProductCard.vue'
 import {useCategoriesStore} from '@/stores/categories'
 import {useProductsStore} from '@/stores/products'
-import {onMounted,ref} from 'vue'
+import {onMounted} from 'vue'
 
 const categoriesStore = useCategoriesStore()
 const productsStore = useProductsStore()
-const showMobileCategories = ref(false)
 
 
 onMounted(async () => {

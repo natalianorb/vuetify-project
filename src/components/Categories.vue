@@ -5,9 +5,9 @@
     <v-slide-group-item
       v-for="category in categories"
       :key="category.slug"
+      v-slot="{ isSelected, toggle }"
       :value="category.slug"
       :active="selectedCategory === category"
-       v-slot="{ isSelected, toggle }"
     >
       <v-btn
         :color="isSelected ? 'primary' : undefined"
@@ -19,7 +19,7 @@
           :src="category.thumbnail || 'https://via.placeholder.com/100'"
           :alt="category.name"
           class="category-thumbnail"
-        />
+        >
         {{ category.name }}
       </v-btn>
     </v-slide-group-item>
