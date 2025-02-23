@@ -9,6 +9,8 @@ export interface Product {
   thumbnail: string
 }
 
+const productsLimit = 30
+
 export const useProductsStore = defineStore('products', () => {
   const products = ref<Product[]>([])
   const loading = ref(false)
@@ -16,7 +18,7 @@ export const useProductsStore = defineStore('products', () => {
   const fetchProducts = async () => {
     loading.value = true
     try {
-      const response = await fetch('https://dummyjson.com/products?limit=30')
+      const response = await fetch(`https://dummyjson.com/products?limit=${productsLimit}`)
       const data = await response.json()
       products.value = data.products
     } catch (error) {
@@ -28,7 +30,7 @@ export const useProductsStore = defineStore('products', () => {
   const fetchProductsByCategory = async (categorySlug: string) => {
     loading.value = true
     try {
-      const response = await fetch(`https://dummyjson.com/products/category/${categorySlug}`)
+      const response = await fetch(`https://dummyjson.com/products/category/${categorySlug}?limit=${productsLimit}`)
       const data = await response.json()
       products.value = data.products
     } catch (error) {
