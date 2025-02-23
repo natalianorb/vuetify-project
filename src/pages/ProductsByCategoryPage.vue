@@ -1,17 +1,17 @@
 <template>
   <v-container>
-    <v-row justify="center">
-      <Categories
-        :categories="categoriesStore.categories"
-        :selected-category="categoriesStore.selectedCategory"
-        @select="openCategory"
-      />
-
+    <v-row>
+      <v-col class="pa-0">
+        <Categories
+          :categories="categoriesStore.categories"
+          :selected-category="categoriesStore.selectedCategory"
+          @select="openCategory"
+        />
+      </v-col>
+    </v-row>
+    <v-row>
       <!-- Products Section -->
-      <v-col
-        cols="12"
-        md="9"
-      >
+      <v-col>
         <v-row>
           <v-col
             v-for="product in productsStore.products"
