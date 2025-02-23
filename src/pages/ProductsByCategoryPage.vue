@@ -1,10 +1,10 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row justify="center">
       <CategoriesSidebar
         :categories="categoriesStore.categories"
         :selected-category="categoriesStore.selectedCategory"
-        @select="categoriesStore.filterByCategory"
+        @select="openCategory"
       />
 
       <!-- Products Section -->
@@ -57,18 +57,35 @@
 <script lang="ts" setup>
 import CategoriesSidebar from '@/components/Categories.vue'
 import ProductCard from '@/components/ProductCard.vue'
-import {useCategoriesStore} from '@/stores/categories'
+import {useCategoriesStore,type Category} from '@/stores/categories'
 import {useProductsStore} from '@/stores/products'
-import {onMounted} from 'vue'
+import {onMounted,watch} from 'vue'
 
+const props = defineProps<{
+  categoryId?: string,
+  subcategoryId?: string,
+}>()
+
+
+watch(
+  () => props.categoryId,
+  (newCategoryId) => {
+    console.log('New Category ID:', newCategoryId)
+    // react to route changes...
+  }
+)
 const categoriesStore = useCategoriesStore()
 const productsStore = useProductsStore()
-
 
 onMounted(async () => {
   await productsStore.fetchProducts()
     .then(() => categoriesStore.fetchCategories())
 })
+
+function openCategory(category: Category) {
+  categoriesStore.filterByCategory(category)
+  productsStore.fetchProductsByCategory(category.slug)
+}
 </script>
 
 <style scoped>

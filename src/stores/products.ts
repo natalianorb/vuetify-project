@@ -16,7 +16,19 @@ export const useProductsStore = defineStore('products', () => {
   const fetchProducts = async () => {
     loading.value = true
     try {
-      const response = await fetch('https://dummyjson.com/products?limit=100')
+      const response = await fetch('https://dummyjson.com/products?limit=30')
+      const data = await response.json()
+      products.value = data.products
+    } catch (error) {
+      console.error('Error fetching products:', error)
+    }
+    loading.value = false
+  }
+
+  const fetchProductsByCategory = async (categorySlug: string) => {
+    loading.value = true
+    try {
+      const response = await fetch(`https://dummyjson.com/products/category/${categorySlug}`)
       const data = await response.json()
       products.value = data.products
     } catch (error) {
@@ -29,5 +41,6 @@ export const useProductsStore = defineStore('products', () => {
     products,
     loading,
     fetchProducts,
+    fetchProductsByCategory,
   }
 })
