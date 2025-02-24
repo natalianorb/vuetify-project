@@ -1,13 +1,6 @@
+import type { Product } from '@/types/product'
 import { defineStore } from 'pinia'
 
-export interface Product {
-  id: number
-  title: string
-  price: number
-  description: string
-  category: string
-  thumbnail: string
-}
 
 const productsLimit = 30
 

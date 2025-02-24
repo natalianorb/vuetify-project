@@ -29,14 +29,7 @@
 </template>
 
 <script lang="ts" setup>
-interface Product {
-  id: number
-  title: string
-  price: number
-  description: string
-  category: string
-  thumbnail: string
-}
+import type {Product} from '@/types/product';
 
 defineProps<{
   product: Product

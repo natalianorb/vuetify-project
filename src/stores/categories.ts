@@ -1,13 +1,8 @@
+import type { Category } from '@/types/category'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { useProductsStore } from './products'
 
-export interface Category {
-  slug: string
-  name: string
-  url: string
-  thumbnail?: string // Optional thumbnail from first product
-}
 
 export const useCategoriesStore = defineStore('categories', () => {
   const categories = ref<Category[]>([])
@@ -33,7 +28,7 @@ export const useCategoriesStore = defineStore('categories', () => {
     }
   }
 
-  const filterByCategory = (category: Category | null) => {
+  const selectCategory = (category: Category | null) => {
     selectedCategory.value = category
   }
 
@@ -41,6 +36,6 @@ export const useCategoriesStore = defineStore('categories', () => {
     categories: computed(() => categories.value),
     selectedCategory,
     fetchCategories,
-    filterByCategory,
+    selectCategory,
   }
 })

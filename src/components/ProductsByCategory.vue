@@ -5,12 +5,13 @@
         <Categories
           :categories="categoriesStore.categories"
           :selected-category="categoriesStore.selectedCategory"
-          @select="openCategory"
+          @select="goToCategory"
         />
       </v-col>
     </v-row>
+
+    <!-- Products Section -->
     <v-row>
-      <!-- Products Section -->
       <v-col>
         <v-row>
           <v-col
@@ -56,34 +57,48 @@
 
 <script lang="ts" setup>
 import ProductCard from '@/components/ProductCard.vue';
-import {useCategoriesStore,type Category} from '@/stores/categories';
+import router from '@/router';
+import {useCategoriesStore} from '@/stores/categories';
 import {useProductsStore} from '@/stores/products';
+import type {Category} from '@/types/category';
 import {onMounted,watch} from 'vue';
+import {useRoute} from 'vue-router';
 
-const props = defineProps<{
-  categoryId?: string,
-  subcategoryId?: string,
-}>()
-
-
-watch(
-  () => props.categoryId,
-  (newCategoryId) => {
-    console.log('New Category ID:', newCategoryId)
-    // react to route changes...
-  }
-)
 const categoriesStore = useCategoriesStore()
 const productsStore = useProductsStore()
+const route = useRoute()
 
-onMounted(async () => {
-  await productsStore.fetchProducts()
-    .then(() => categoriesStore.fetchCategories())
+watch(
+  () => route.params,
+  (params) => {
+    const categoryId = 'categoryId' in params ? params.categoryId : undefined
+    onCategoryChange(categoryId)
+  }
+)
+
+onMounted(() => {
+  const categoryId = 'categoryId' in route.params ? route.params.categoryId : undefined;
+
+  // todo move this to route guard
+  if (!categoriesStore.selectedCategory || categoriesStore.selectedCategory.slug !== categoryId) {
+    categoriesStore.fetchCategories()
+  }
+
+  onCategoryChange(categoryId)
 })
 
-function openCategory(category: Category) {
-  categoriesStore.filterByCategory(category)
-  productsStore.fetchProductsByCategory(category.slug)
+async function onCategoryChange(newCategoryId?: string) {
+  if (newCategoryId) {
+    await productsStore.fetchProductsByCategory(newCategoryId)
+
+  } else {
+    await productsStore.fetchProducts()
+      .then(() => categoriesStore.fetchCategories())
+  }
+}
+
+function goToCategory(category: Category) {
+  router.push('/category/' + category.slug)
 }
 </script>
 

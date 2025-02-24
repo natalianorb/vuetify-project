@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-import type {Category} from '@/stores';
+import type {Category} from '@/types/category';
 
 defineProps<{
   categories: Category[]
