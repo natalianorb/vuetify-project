@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <router-view />
+    <ProductsByCategory />
   </v-main>
 </template>
 

@@ -21,7 +21,10 @@
             sm="6"
             md="4"
           >
-            <ProductCard :product="product" />
+            <ProductCard
+              :product="product"
+              @open="goToProductPage"
+            />
           </v-col>
         </v-row>
 
@@ -61,6 +64,7 @@ import router from '@/router';
 import {useCategoriesStore} from '@/stores/categories';
 import {useProductsStore} from '@/stores/products';
 import type {Category} from '@/types/category';
+import type {Product} from '@/types/product';
 import {onMounted,watch} from 'vue';
 import {useRoute} from 'vue-router';
 
@@ -99,6 +103,10 @@ async function onCategoryChange(newCategoryId?: string) {
 
 function goToCategory(category: Category) {
   router.push('/category/' + category.slug)
+}
+
+function goToProductPage(product: Product) {
+  router.push('/product/' + product.id)
 }
 </script>
 

@@ -1,5 +1,8 @@
 <template>
-  <v-card height="100%">
+  <v-card
+    height="100%"
+    @click="$emit('open', product)"
+  >
     <v-img
       :src="product.thumbnail"
       height="200"
@@ -29,10 +32,14 @@
 </template>
 
 <script lang="ts" setup>
-import type {Product} from '@/types/product';
+import type { Product } from '@/types/product'
 
 defineProps<{
   product: Product
+}>()
+
+defineEmits<{
+  open: [product: Product]
 }>()
 </script>
 

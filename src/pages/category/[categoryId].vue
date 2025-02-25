@@ -2,9 +2,12 @@
 </template>
 
 <script lang="ts" setup>
-
 </script>
 
 <style scoped>
-/* Add your styles here */
 </style>
+
+<route lang="yaml">
+meta:
+  layout: shop
+</route>
