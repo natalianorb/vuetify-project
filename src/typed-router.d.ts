@@ -19,7 +19,6 @@ declare module 'vue-router/auto-routes' {
    */
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
-    '/category/[categoryId]': RouteRecordInfo<'/category/[categoryId]', '/category/:categoryId', { categoryId: ParamValue<true> }, { categoryId: ParamValue<false> }>,
     '/product.[productId]': RouteRecordInfo<'/product.[productId]', '/product/:productId', { productId: ParamValue<true> }, { productId: ParamValue<false> }>,
   }
 }

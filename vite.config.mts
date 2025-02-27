@@ -16,6 +16,11 @@ export default defineConfig({
   plugins: [
     VueRouter({
       dts: 'src/typed-router.d.ts',
+      extendRoute(route) {
+        if (route.name === "/") {
+          route.addAlias("/category/:categoryId");
+        }
+      },
     }),
     Layouts(),
     AutoImport({
