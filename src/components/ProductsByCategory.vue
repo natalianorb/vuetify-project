@@ -12,38 +12,33 @@
 
     <!-- Products Section -->
     <v-row>
-      <v-col>
-        <v-row>
-          <v-col
-            v-for="product in productsStore.products"
-            :key="product.id"
-            cols="12"
-            sm="6"
-            md="4"
-          >
-            <ProductCard
-              :product="product"
-              @open="goToProductPage"
-            />
-          </v-col>
-        </v-row>
-
-        <v-row
-          v-if="!productsStore.products.length && !productsStore.loading"
-          justify="center"
-        >
-          <v-col
-            cols="12"
-            class="text-center"
-          >
-            <v-alert type="info">
-              No products found
-            </v-alert>
-          </v-col>
-        </v-row>
+      <v-col
+        v-for="product in productsStore.products"
+        :key="product.id"
+        cols="12"
+        sm="6"
+        md="4"
+      >
+        <ProductCard
+          :product="product"
+          @open="goToProductPage"
+        />
       </v-col>
     </v-row>
 
+    <v-row
+      v-if="!productsStore.products.length && !productsStore.loading"
+      justify="center"
+    >
+      <v-col
+        cols="12"
+        class="text-center"
+      >
+        <v-alert type="info">
+          No products found
+        </v-alert>
+      </v-col>
+    </v-row>
     <!-- Loading Overlay -->
     <v-overlay
       :model-value="productsStore.loading"
@@ -59,54 +54,58 @@
 </template>
 
 <script lang="ts" setup>
-import ProductCard from '@/components/ProductCard.vue';
-import router from '@/router';
-import {useCategoriesStore} from '@/stores/categories';
-import {useProductsStore} from '@/stores/products';
-import type {Category} from '@/types/category';
-import type {Product} from '@/types/product';
-import {onMounted,watch} from 'vue';
-import {useRoute} from 'vue-router';
+import ProductCard from "@/components/ProductCard.vue";
+import router from "@/router";
+import { useCategoriesStore } from "@/stores/categories";
+import { useProductsStore } from "@/stores/products";
+import type { Category } from "@/types/category";
+import type { Product } from "@/types/product";
+import { onMounted, watch } from "vue";
+import { useRoute } from "vue-router";
 
-const categoriesStore = useCategoriesStore()
-const productsStore = useProductsStore()
-const route = useRoute()
+const categoriesStore = useCategoriesStore();
+const productsStore = useProductsStore();
+const route = useRoute();
 
 watch(
   () => route.params,
   (params) => {
-    const categoryId = 'categoryId' in params ? params.categoryId : undefined
-    onCategoryChange(categoryId)
-  }
-)
+    const categoryId = "categoryId" in params ? params.categoryId : undefined;
+    onCategoryChange(categoryId);
+  },
+);
 
 onMounted(() => {
-  const categoryId = 'categoryId' in route.params ? route.params.categoryId : undefined;
+  const categoryId =
+    "categoryId" in route.params ? route.params.categoryId : undefined;
 
   // todo move this to route guard
-  if (!categoriesStore.selectedCategory || categoriesStore.selectedCategory.slug !== categoryId) {
-    categoriesStore.fetchCategories()
+  if (
+    !categoriesStore.selectedCategory ||
+    categoriesStore.selectedCategory.slug !== categoryId
+  ) {
+    categoriesStore.fetchCategories();
   }
 
-  onCategoryChange(categoryId)
-})
+  onCategoryChange(categoryId);
+});
 
 async function onCategoryChange(newCategoryId?: string) {
   if (newCategoryId) {
-    await productsStore.fetchProductsByCategory(newCategoryId)
-
+    await productsStore.fetchProductsByCategory(newCategoryId);
   } else {
-    await productsStore.fetchProducts()
-      .then(() => categoriesStore.fetchCategories())
+    await productsStore
+      .fetchProducts()
+      .then(() => categoriesStore.fetchCategories());
   }
 }
 
 function goToCategory(category: Category) {
-  router.push('/category/' + category.slug)
+  router.push("/category/" + category.slug);
 }
 
 function goToProductPage(product: Product) {
-  router.push('/product/' + product.id)
+  router.push("/product/" + product.id);
 }
 </script>
 
