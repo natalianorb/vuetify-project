@@ -6,4 +6,5 @@ export interface Product {
   description: string
   category: string
   thumbnail: string
+  images?: string[]
 }

@@ -21,7 +21,6 @@
       >
         <ProductCard
           :product="product"
-          @open="goToProductPage"
         />
       </v-col>
     </v-row>
@@ -59,7 +58,6 @@ import router from "@/router";
 import { useCategoriesStore } from "@/stores/categories";
 import { useProductsStore } from "@/stores/products";
 import type { Category } from "@/types/category";
-import type { Product } from "@/types/product";
 import { onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 
@@ -70,14 +68,14 @@ const route = useRoute();
 watch(
   () => route.params,
   (params) => {
-    const categoryId = "categoryId" in params ? params.categoryId : undefined;
+    const categoryId = "categoryId" in params ? params.categoryId as string : undefined;
     onCategoryChange(categoryId);
   },
 );
 
 onMounted(() => {
   const categoryId =
-    "categoryId" in route.params ? route.params.categoryId : undefined;
+    "categoryId" in route.params ? route.params.categoryId as string : undefined;
 
   // todo move this to route guard
   if (
@@ -104,9 +102,6 @@ function goToCategory(category: Category) {
   router.push("/category/" + category.slug);
 }
 
-function goToProductPage(product: Product) {
-  router.push("/product/" + product.id);
-}
 </script>
 
 <style scoped>
