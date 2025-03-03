@@ -12,5 +12,6 @@ declare module 'vue' {
     ProductsByCategory: typeof import('./components/ProductsByCategory.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TopBar: typeof import('./components/TopBar.vue')['default']
   }
 }

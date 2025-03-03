@@ -26,6 +26,7 @@
       <v-btn
         color="primary"
         variant="tonal"
+        @click.stop="addItemToCart"
       >
         Add to Cart
       </v-btn>
@@ -35,10 +36,12 @@
 
 <script lang="ts" setup>
 import router from "@/router"
+import { useCartStore } from "@/stores/cart"
 import { useProductsStore } from "@/stores/products"
 import type { Product } from '@/types/product'
 
 const productsStore = useProductsStore()
+const cartStore = useCartStore()
 const props = withDefaults(defineProps<{
   product: Product,
   showThumbnail?: boolean,
@@ -47,6 +50,11 @@ const props = withDefaults(defineProps<{
   showThumbnail: true,
   isNavigationDisabled: false,
 });
+
+
+function addItemToCart() {
+  cartStore.addToCart(props.product)
+}
 
 function goToProductPage() {
   productsStore.selectProduct(props.product)
