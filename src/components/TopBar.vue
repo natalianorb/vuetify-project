@@ -2,7 +2,6 @@
   <v-app-bar
     flat
     density="compact"
-    scroll-behavior="collapse"
   >
     <v-container class="mx-auto d-flex align-center justify-center">
       <v-btn
